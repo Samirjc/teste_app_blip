@@ -1,9 +1,9 @@
-# Default values for PLUGIN_NAME.
+# Default values for teste_app_blip.
 # Declare variables to be passed into your templates.
-fullnameOverride: PLUGIN_NAME
+fullnameOverride: teste_app_blip
 replicaCount: 1
 image:
-    repository: PLUGIN_NAME
+    repository: teste_app_blip
     tag: #{Build.BuildId}#
     pullPolicy: IfNotPresent
     imagePullSecretName: acr-takeprivate-secret
@@ -43,7 +43,7 @@ environment:
     stage: staging
 
 appSettings:
-    configMap: PLUGIN_NAME
+    configMap: teste_app_blip
     path: /app/src/config/appsettings.json
     subPath: appsettings.json
 

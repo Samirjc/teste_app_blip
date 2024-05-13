@@ -9,6 +9,7 @@ const Header = ({ title, canRefresh = false, onRefresh, onClick }) => {
             type="button"
             className="f4 fw6 db black link dim b--none bg-transparent pointer"
             onClick={onRefresh}
+            aria-label="button"
         >
             <bds-icon name="refresh" />
         </button>

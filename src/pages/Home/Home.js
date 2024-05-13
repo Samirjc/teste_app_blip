@@ -4,7 +4,6 @@ import { useTranslation, Trans } from 'react-i18next';
 import RoutesPath from '../../constants/routes-path';
 
 import settings from '../../config';
-
 import logo from '../../assets/images/svg/blip-balloon.svg';
 import Header from './components/Header';
 
