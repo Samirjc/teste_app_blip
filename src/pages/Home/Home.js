@@ -1,25 +1,15 @@
-import React, { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useTranslation, Trans } from 'react-i18next';
-import RoutesPath from '../../constants/routes-path';
-
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import settings from '../../config';
-import logo from '../../assets/images/svg/blip-balloon.svg';
 import Header from './components/Header';
+import { getContacts } from '../../utils/getContacts';
 
 const PAGE_ICON = 'plugin';
 const BLANK = '_blank';
 
 const Home = () => {
-    const history = useHistory();
     const { t } = useTranslation();
-
-    const handleNavigation = useCallback(
-        (path, params = {}) => {
-            history.push(path, params);
-        },
-        [history]
-    );
+    const [contacts, setContacts] = useState();
 
     return (
         <div className="ph1 ph4-m ph5-ns pb5">
@@ -29,41 +19,18 @@ const Home = () => {
                 onClick={() => window.open(settings.repositoryUrl, BLANK)}
             />
             <div className="flex flex-column items-center justify-center bp-c-neutral-dark-city f5 h-100 mt4">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p className="tc">
-                    {t('paragraph.homeDescription.part1')}
-                    <br />
-                    <Trans i18nKey="paragraph.homeDescription.part2">
-                        Edit <code>src/pages/Home.js</code> and save to reload.
-                    </Trans>
-                </p>
-                <h5 className="f5 b mt3 mb2">{t('title.exemples')}</h5>
-                <span
-                    className="f6 flex items-center blue no-underline underline-hover pointer"
-                    data-testid="exemple-one"
-                    aria-hidden="true"
-                    onClick={() =>
-                        handleNavigation(RoutesPath.EXAMPLE_PAGE.PATH, {
-                            type: 'storedData'
-                        })
-                    }
-                >
-                    <bds-icon name="file-txt-1" size="x-small" />
-                    {t('link.blipDataExample')}
-                </span>
-                <span
-                    className="f6 flex items-center blue no-underline underline-hover mt1 pointer"
-                    data-testid="exemple-two"
-                    aria-hidden="true"
-                    onClick={() =>
-                        handleNavigation(RoutesPath.EXAMPLE_PAGE.PATH, {
-                            type: 'swrCall'
-                        })
-                    }
-                >
-                    <bds-icon name="file-txt-1" size="x-small" />
-                    {t('link.swrExemple')}
-                </span>
+                <button onClick={() => getContacts().then(res => setContacts(res.response.items))} type="button">
+                    Retornar últimos 10 contatos
+                </button>
+
+                <div>
+                    {contacts?.map((item) => (
+                        <div className='mt4' style={{ border: "1px solid black", padding: "10px" }}>
+                            <p><strong>nome:</strong> {item.name}</p>
+                            <p><strong>data da última mensagem:</strong> {item.lastMessageDate.split('T')[0]}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
